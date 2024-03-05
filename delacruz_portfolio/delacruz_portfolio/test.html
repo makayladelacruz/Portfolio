@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=800, height=600, initial-scale=1">
+  <title>Responsive Home Page</title>
+  <style>
+    /* Resetting default margin and padding */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      width: 800px; /* Set page width */
+      height: 600px; /* Set page height */
+      background-color: #f7f7f7; /* Background color for demonstration */
+      margin: auto; /* Center the page horizontally */
+      font-size: 16px; /* Default font size */
+    }
+
+    .navbar {
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      align-self: flex-end; /* Align to top right */
+    }
+
+    .navbar a {
+      color: white;
+      margin-left: 10px;
+      text-decoration: none;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 20px;
+    }
+
+    
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Services</a>
+    <a href="#">Contact</a>
+  </div>
+  
+  <div class="main-content">
+    <h1>Welcome to Our Website!</h1>
+    <p>This is the main content area. It will scale with the screen resolution.</p>
+  </div>
+</body>
+</html>

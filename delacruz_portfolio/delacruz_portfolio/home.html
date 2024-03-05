@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home</title>
+    <link rel="stylesheet" href="main.css">
+    <style>
+        p {
+            font-size: 2vw;
+            line-height: 50px;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        #main {
+            margin-left: 10%;
+            margin-top: 3%;
+            padding: 5%;
+            line-height: 1px;
+        }
+
+        #main .content {
+            overflow: hidden; /* Clear floats */
+        }
+
+        #main img {
+            margin-top: 1px;
+            margin-left: 20px; /* Adjust this for spacing */
+            max-width: 40%; /* Limit image width */
+            height: auto;
+            float: right;
+            opacity: 0; /* Initially hidden */
+            transition: opacity 1s ease; /* Smooth transition */
+        }
+
+        #main .text {
+            float: left;
+            width: 60%; /* Adjust this to leave space for the image */
+        }
+
+        h1::after {
+            content: "|";
+            position: absolute;
+            top: 0;
+            right: -0.2em;
+            animation: blinkCursor 0.7s infinite alternate;
+            color: #BDC667;
+        }
+
+        @keyframes blinkCursor {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var helloWorldText = "Hello World.";
+            var helloWorldElement = document.getElementById("hello-world");
+            var index = 0;
+            var typingInterval = setInterval(function() {
+                if (index < helloWorldText.length) {
+                    helloWorldElement.textContent += helloWorldText.charAt(index);
+                    index++;
+                } else {
+                    clearInterval(typingInterval);
+                    document.querySelectorAll("#main p, #main img").forEach(function(element) {
+                        element.style.opacity = 1;
+                    });
+                }
+            }, 100);
+        });
+    </script>
+</head>
+<body>
+    <div id="header">
+        <a href="home.html">MD.</a>
+    </div>
+
+    <div id="nav">
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+    </div>
+
+    <div id="main">
+        <h1 id="hello-world"></h1>
+        <div class="content">
+            <div class="text">
+                <p>My name is Max and I'm an aspiring <br>software engineer. Transforming <br>ideas into digital realities, 
+                one<br> line of code at a time.</p>
+            </div>
+            <img src="images/frog.png" alt="Frog Image" width="500px" height="300px">
+        </div>
+    </div>
+
+    <div id="footer">
+        <p>Feet.</p>
+        <p>footer</p>
+    </div>
+</body>
+</html>
