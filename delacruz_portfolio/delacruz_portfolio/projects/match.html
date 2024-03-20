@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Memory Matching</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1000px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top:200px;
+            color: #333;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            grid-gap: 10px;
+            margin-top: 20px;
+        }
+
+        .card {
+            width: 100px;
+            height: 100px;
+            background-color: #fff;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 36px;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .card.flipped {
+            background-color: #f0f0f0;
+            transform: scale(0.97);
+        }
+
+        .symbol {
+            display: none;
+        }
+
+        .flipped .symbol {
+            display: block;
+        }
+
+        .score-panel {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .score {
+            font-size: 20px;
+        }
+
+        .moves {
+            font-size: 20px;
+        }
+
+        .timer {
+            font-size: 20px;
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #007bff;
+        }
+
+        .controls {
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Memory Matching</h1>
+        <div class="grid" id="grid"></div>
+        <div class="score-panel">
+            <div class="score">Score: <span id="score">0</span></div>
+            <div class="moves">Moves: <span id="moves">0</span></div>
+            <div class="timer">Time: <span id="timer">0:00</span></div>
+        </div>
+        <div class="message" id="message"></div>
+        <div class="controls">
+            <button class="btn" id="resetBtn">Reset Game</button>
+        </div>
+    </div>
+
+    <audio id="flipSound" src="https://www.soundjay.com/button/sounds/button-3.mp3"></audio>
+    <audio id="matchSound" src="https://www.soundjay.com/button/sounds/button-4.mp3"></audio>
+    <audio id="winSound" src="https://www.soundjay.com/button/sounds/button-2.mp3"></audio>
+
+    <script>
+        const symbols = ['🐸', '🍄', '🐈', '🌮', '🌭', '🍔', '🐢', '🐹', '🐌', '🌈', '🧸', '🌵', '🍩', '🐠', '⛳️', '🌺'];
+
+        let grid = document.getElementById('grid');
+        let scoreDisplay = document.getElementById('score');
+        let movesDisplay = document.getElementById('moves');
+        let timerDisplay = document.getElementById('timer');
+        let messageDisplay = document.getElementById('message');
+        let resetBtn = document.getElementById('resetBtn');
+        let flipSound = document.getElementById('flipSound');
+        let matchSound = document.getElementById('matchSound');
+        let winSound = document.getElementById('winSound');
+
+        let cards = [];
+        let flippedCards = [];
+        let score = 0;
+        let moves = 0;
+        let timer;
+        let time = 0;
+        let gameStarted = false;
+
+        function initializeGame() {
+            score = 0;
+            scoreDisplay.textContent = score;
+            moves = 0;
+            movesDisplay.textContent = moves;
+            flippedCards = [];
+            time = 0;
+            clearInterval(timer);
+            timerDisplay.textContent = formatTime(time);
+
+            let cardSymbols = symbols.concat(symbols);
+            cardSymbols = shuffle(cardSymbols);
+
+            grid.innerHTML = '';
+            cardSymbols.forEach(symbol => {
+                const card = createCard(symbol);
+                cards.push(card);
+                grid.appendChild(card);
+            });
+        }
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function createCard(symbol) {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.innerHTML = `
+                <div class="symbol">${symbol}</div>
+                <div class="back"></div>
+            `;
+            card.addEventListener('click', () => {
+                if (!gameStarted) {
+                    startGame();
+                    gameStarted = true;
+                }
+                flipCard(card);
+            });
+            return card;
+        }
+
+        function flipCard(card) {
+            if (flippedCards.length < 2 && !flippedCards.includes(card)) {
+                card.classList.add('flipped');
+                playSound(flipSound);
+
+                flippedCards.push(card);
+
+                if (flippedCards.length === 2) {
+                    moves++;
+                    movesDisplay.textContent = moves;
+                    setTimeout(checkMatch, 500);
+                }
+            }
+        }
+
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            const symbol1 = card1.querySelector('.symbol').textContent;
+            const symbol2 = card2.querySelector('.symbol').textContent;
+
+            if (symbol1 === symbol2) {
+                card1.removeEventListener('click', () => flipCard(card1));
+                card2.removeEventListener('click', () => flipCard(card2));
+                score++;
+                scoreDisplay.textContent = score;
+                playSound(matchSound);
+                checkWin();
+            } else {
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                }, 500);
+            }
+
+            flippedCards = [];
+        }
+
+        function checkWin() {
+            if (score === symbols.length) {
+                clearInterval(timer);
+                messageDisplay.textContent = `Congratulations! You won in ${formatTime(time)} with ${moves} moves!`;
+                playSound(winSound);
+                animateBackground();
+            }
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            const formattedSeconds = remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds;
+            return `${minutes}:${formattedSeconds}`;
+        }
+
+        function startGame() {
+            timer = setInterval(() => {
+                time++;
+                timerDisplay.textContent = formatTime(time);
+            }, 1000);
+        }
+
+        function resetGame() {
+            clearInterval(timer);
+            cards.forEach(card => card.remove());
+            cards = [];
+            messageDisplay.textContent = '';
+            gameStarted = false;
+            initializeGame();
+        }
+
+        function animateBackground() {
+            let colorIndex = 0;
+            const colors = ['#ff9999', '#99ff99', '#9999ff', '#ff99ff', '#ffff99'];
+            const interval = setInterval(() => {
+                document.body.style.backgroundColor = colors[colorIndex];
+                colorIndex++;
+                if (colorIndex === colors.length) {
+                    colorIndex = 0;
+                }
+            }, 500);
+            setTimeout(() => {
+                clearInterval(interval);
+                document.body.style.backgroundColor = '#f9f9f9';
+            }, 3000);
+        }
+
+        function playSound(sound) {
+            sound.currentTime = 0;
+            sound.play();
+        }
+
+        resetBtn.addEventListener('click', resetGame);
+
+        // Initialize the game
+        initializeGame();
+    </script>
+</body>
+</html>

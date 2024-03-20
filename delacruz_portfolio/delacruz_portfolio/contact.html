@@ -3,47 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   
     <title>Contact</title>
     <link rel="stylesheet" href="main.css">
     <style>
-
-    #main {
-            margin-left: 10%;
-            margin-right: 10%;
-            margin-top: 3%;
-            padding: 5%;
-            line-height: 1px;
-            opacity: 0; 
-            transition: opacity 1s ease; 
+     
+        #main {
+            width:1000px;
+            height:auto;
+            margin-top: 60px;
+            margin-bottom: 30px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            transition: opacity 2s ease;
+            background-color: #40316c;
+            padding-top:100px;
+            padding-bottom:100px;
+            padding-left: 100px;
+            padding-right: 100px;
+            box-sizing: border-box;
+            border-radius: 20px;
+            overflow: hidden; /* Clear the float */
         }
-        
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1.5px solid #ff7fe8;
+            background-color: #40316c;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        textarea {
+            min-height: 100px;
+        }
+
+        .form-group {
+            color: #ff7fe8;
+        }
+
+       
+
+        /* Position submit button to bottom right */
+        .submit-button {
+            margin-top: 20px;
+            float: right;
+        }
+
+        /* Clear the float */
+        .clear {
+            clear: both;
+        }
     </style>
     <script src="fade.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             fadeInElement("main");
         });
+
+        function validateForm() {
+            // You can add form validation here if needed
+            return true;
+        }
     </script>
 </head>
 <body>
     <div id="header">
-        <a href="home.html">MD.</a>
+        <a href="home.html" class="leftnav"><i class="fas fa-bug"></i></a>
     </div>
 
-<div id="nav">
-    <a href="about.html">About</a>
-    <a href="projects.html">Projects</a>
-    <a href="contact.html">Contact</a>
-</div>
+    <div id="nav">
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+    </div>
 
-<div id="main">
-    <h1>let's connect</h1>
-    <hr size="1">
-    <p><a href="mailto:makayladelacruz@gmail.com" >Email</a><p></p>
-    <p><a href= "https://github.com/makayladelacruz" target="_blank">Github</a></p>
-    <p><a href= "https://www.linkedin.com/in/makayla-dela-cruz-712385262/" target="_blank">LinkedIn</a></p>
-</div>
+    <div id="main">
+        
+  
+        <div class="left-div">
+            <h1>let's connect.</h1>
+            <i class="fa fa-envelope" style="font-size:25px;color:#deff00"></i>
+                <a href="mailto:makayladelacruz@gmail.com">Email</a>
+                <br>
+                <i class="fa fa-github" style="font-size:25px;color:#deff00"></i>
+                <a href="https://github.com/makayladelacruz" target="_blank">Github</a>
+                <br>
+                <i class="fa fa-linkedin-square" style="font-size:25px;color:#deff00"></i>
+                <a href="https://www.linkedin.com/in/makayla-dela-cruz-712385262/" target="_blank">LinkedIn</a>
+          
+        </div>
 
-<div id="footer"></div>
+        <div class="right-div">
+           
+            <form action="https://formspree.io/f/mqkrlprj" method="POST" onsubmit="return validateForm()">
+                <div class="form-group">
+                    <label for="firstName">First Name*</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name*</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email*</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message*</label>
+                    <textarea rows="5" id="message" name="message" required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div id="footer">
+        © 2024 by Max dela Cruz 
+    </div>
 </body>
 </html>

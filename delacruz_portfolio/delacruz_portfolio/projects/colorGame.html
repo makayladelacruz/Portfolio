@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Color Mix</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .color-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .color-display {
+            width: 200px;
+            height: 200px;
+            border: 2px solid #333;
+            margin-right: 20px;
+            display: inline-block;
+        }
+
+        .user-color-display {
+            width: 100px;
+            height: 100px;
+            border: 2px solid #333;
+            margin-right: 20px;
+            display: inline-block;
+        }
+
+        .color-sliders {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .slider-container {
+            width: 200px;
+            margin-bottom: 10px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #007bff;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #0056b3;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .score-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Color Mix</h1>
+        <div class="color-container">
+            <div class="color-display" id="targetColorDisplay"></div>
+            <div class="user-color-display" id="userColorDisplay"></div>
+        </div>
+        <div class="color-sliders">
+            <div class="slider-container">
+                <label for="redSlider">Red:</label>
+                <input type="range" id="redSlider" min="0" max="255" value="0" oninput="updateUserColor()">
+            </div>
+            <div class="slider-container">
+                <label for="greenSlider">Green:</label>
+                <input type="range" id="greenSlider" min="0" max="255" value="0" oninput="updateUserColor()">
+            </div>
+            <div class="slider-container">
+                <label for="blueSlider">Blue:</label>
+                <input type="range" id="blueSlider" min="0" max="255" value="0" oninput="updateUserColor()">
+            </div>
+        </div>
+        <div class="message" id="message"></div>
+        <button class="btn" id="checkScoreBtn" onclick="checkScore()">Check Score</button>
+        <button class="btn" id="resetBtn" onclick="resetGame()">Reset</button>
+        <div class="score-container" id="scoreContainer" style="display:none;">
+            <div class="score" id="score">Score: 0</div>
+
+        </div>
+    </div>
+
+    <script>
+        let targetRed = 0;
+        let targetGreen = 0;
+        let targetBlue = 0;
+        let userRed = 0;
+        let userGreen = 0;
+        let userBlue = 0;
+        let score = 0;
+
+        const targetColorDisplay = document.getElementById("targetColorDisplay");
+        const userColorDisplay = document.getElementById("userColorDisplay");
+        const redSlider = document.getElementById("redSlider");
+        const greenSlider = document.getElementById("greenSlider");
+        const blueSlider = document.getElementById("blueSlider");
+        const messageElement = document.getElementById("message");
+        const scoreElement = document.getElementById("score");
+
+        function checkScore() {
+            score = calculateScore(targetRed, targetGreen, targetBlue, userRed, userGreen, userBlue);
+            scoreElement.textContent = `Score: ${score.toFixed(2)}`;
+            scoreContainer.style.display = "block";
+        }
+
+        function startGame() {
+            scoreContainer.style.display = "none";
+            score = 0;
+            scoreElement.textContent = "Score: 0";
+            messageElement.textContent = "";
+
+            targetRed = getRandomInt(256);
+            targetGreen = getRandomInt(256);
+            targetBlue = getRandomInt(256);
+            updateTargetColor();
+        }
+
+        function resetGame() {
+            startGame();
+            redSlider.value = 0;
+            greenSlider.value = 0;
+            blueSlider.value = 0;
+            updateUserColor();
+        }
+
+        function updateUserColor() {
+            userRed = parseInt(redSlider.value);
+            userGreen = parseInt(greenSlider.value);
+            userBlue = parseInt(blueSlider.value);
+
+            let userColor = `rgb(${userRed}, ${userGreen}, ${userBlue})`;
+            userColorDisplay.style.backgroundColor = userColor;
+        }
+
+        function updateTargetColor() {
+            let targetColor = `rgb(${targetRed}, ${targetGreen}, ${targetBlue})`;
+            targetColorDisplay.style.backgroundColor = targetColor;
+        }
+
+        function calculateColorDifference(r1, g1, b1, r2, g2, b2) {
+            return Math.sqrt(Math.pow(r1 - r2, 2) + Math.pow(g1 - g2, 2) + Math.pow(b1 - b2, 2));
+        }
+
+        function calculateScore(r1, g1, b1, r2, g2, b2) {
+            let difference = calculateColorDifference(r1, g1, b1, r2, g2, b2);
+            let score = 100 - (difference / 255 * 100); 
+            return Math.max(score, 0); 
+        }
+
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * Math.floor(max));
+        }
+
+    
+        startGame();
+    </script>
+</body>
+</html>

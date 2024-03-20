@@ -3,40 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Home</title>
     <link rel="stylesheet" href="main.css">
+    
     <style>
-        p {
-            font-size: 2vw;
-            line-height: 50px;
-            opacity: 0;
-            transition: opacity 1s ease;
-        }
-
         #main {
-            margin-left: 10%;
-            margin-top: 3%;
-            padding: 5%;
-            line-height: 1px;
+            margin-top: 210px;
         }
-
-        #main .content {
-            overflow: hidden; /* Clear floats */
+        p {
+            font-size: 25px;
+            opacity: 0;
+            transition: opacity 2s ease;
         }
-
-        #main img {
-            margin-top: 1px;
-            margin-left: 20px; /* Adjust this for spacing */
-            max-width: 40%; /* Limit image width */
-            height: auto;
-            float: right;
-            opacity: 0; /* Initially hidden */
-            transition: opacity 1s ease; /* Smooth transition */
-        }
-
-        #main .text {
+        
+        .text {
             float: left;
-            width: 60%; /* Adjust this to leave space for the image */
+            width: 50%;
+        }
+
+        .img-container {
+            float: right;
+            width: 50%;
+            text-align: right;
+            opacity: 0;
+            transition: opacity 3s ease;
+        }
+
+        .img-container img {
+            max-width: 100%;
+            height: auto;
+            max-height: 300px;
         }
 
         h1::after {
@@ -45,18 +42,19 @@
             top: 0;
             right: -0.2em;
             animation: blinkCursor 0.7s infinite alternate;
-            color: #BDC667;
+            color: #ff7fe8;
         }
 
         @keyframes blinkCursor {
             0% {
                 opacity: 0;
             }
-
             100% {
                 opacity: 1;
             }
         }
+
+      
     </style>
 
     <script>
@@ -70,9 +68,8 @@
                     index++;
                 } else {
                     clearInterval(typingInterval);
-                    document.querySelectorAll("#main p, #main img").forEach(function(element) {
-                        element.style.opacity = 1;
-                    });
+                    document.querySelector("#main p").style.opacity = 1;
+                    document.querySelector("#main .img-container").style.opacity = 1;
                 }
             }, 100);
         });
@@ -80,29 +77,31 @@
 </head>
 <body>
     <div id="header">
-        <a href="home.html">MD.</a>
+        <a href="home.html"><i class="fas fa-bug"></i></a>
     </div>
 
     <div id="nav">
-        <a href="about.html">About</a>
-        <a href="projects.html">Projects</a>
-        <a href="contact.html">Contact</a>
+        
+            
+            <a href="about.html">About</a>
+            <a href="projects.html">Projects</a>
+            <a href="contact.html">Contact</a>
+       
     </div>
 
     <div id="main">
-        <h1 id="hello-world"></h1>
-        <div class="content">
-            <div class="text">
-                <p>My name is Max and I'm an aspiring <br>software engineer. Transforming <br>ideas into digital realities, 
-                one<br> line of code at a time.</p>
-            </div>
-            <img src="images/frog.png" alt="Frog Image" width="500px" height="300px">
+        <div class="text">
+            <h1 id="hello-world"></h1>
+            <p>My name is Max and I'm an aspiring software engineer. Transforming ideas into digital realities, 
+                one line of code at a time.</p>
+        </div>
+        <div class="img-container">
+            <img src="images/avatar.png" alt="PC Image">
         </div>
     </div>
 
     <div id="footer">
-        <p>Feet.</p>
-        <p>footer</p>
+        © 2024 by Max dela Cruz
     </div>
 </body>
 </html>

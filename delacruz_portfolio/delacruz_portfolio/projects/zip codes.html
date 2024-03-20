@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<style type='text/css'>
+html, body { height: 100%; }
+</style>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" crossorigin="anonymous">
+
+
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+<script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'></script>
+
+
+<script type='text/javascript' src='https://cirrus.rider.edu/cis/ataylor/utilities-bs4.js'></script>
+
+<script type='text/javascript'>
+
+    window.onload = function(){
+                    getData();
+                };
+                
+    var zips = [];
+    var index = 0;
+    
+    function getData(){
+       var url = 'https://cirrus.rider.edu/cis/ataylor/getZips.py';
+        $.getJSON(url,
+            function(data) {
+               zips = data;
+               displayData(zips[index]);
+     });
+    
+    }
+    
+    
+    
+    function displayData(s){
+        document.getElementById('zip').value = s.zip;
+        document.getElementById('city').value = s.city;
+        document.getElementById('state').value = s.state;
+        document.getElementById('municipality').value = s.municipality;
+        
+    }
+    
+    function next(){
+                index ++;
+                displayData(zips[index] );
+            }
+            
+            function previous(){
+                index--;
+                displayData(zips[index]);
+            }
+            function first(){
+                index = 0;
+                displayData(zips[index]);
+                
+            }
+            function last(){
+                index = zips.length-1;
+                displayData(zips[index]);
+                
+            }
+    
+    
+</script>
+
+</head>
+
+<body>
+  <div class="row w-35 h-100 align-items-center ">
+
+          <div  class='container h-55'>
+
+               
+                 <div class='card m-2'>
+
+                   <div class='card-body border'>
+
+                       <h5 class='card-header'>Zip Code Information</h5>
+
+                     
+                       <div class='form-group'>
+                       <label for='zip' class='label'>Zip Code</label>
+                       <input type='text' class='form-control' id='zip' placeholder='Enter Zip Code' />
+                      </div>
+                      
+                      <div class='form-group'>
+                       <label for='zip' class='label'>City</label>
+                       <input type='text' class='form-control' id='city' placeholder='Enter City' />
+                      </div>
+                      
+                      <div class='form-group'>
+                       <label for='zip' class='label'>State</label>
+                       <input type='text' class='form-control' id='state' placeholder='Enter State' />
+                      </div>
+                      
+                      <div class='form-group'>
+                       <label for='zip' class='label'>Municipality</label>
+                       <input type='text' class='form-control' id='municipality' placeholder='Enter Municipality' />
+                      </div>
+                      
+                
+                       <button type = 'button' class='btn btn-primary m-1' onclick = 'first()'>First</button>
+                        <button type='button' class='btn btn-primary m-1' onclick='next()' >Next</button>
+                        <button type = 'button' class='btn btn-primary m-1' onclick = 'previous()'>Previous</button>
+                        <button type = 'button' class='btn btn-primary m-1' onclick = 'last()'>Last</button>
+                   </div> 
+
+            </div>  
+
+         </div>
+  </div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

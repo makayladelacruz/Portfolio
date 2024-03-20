@@ -3,44 +3,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
     <title>Projects</title>
     <link rel="stylesheet" href="main.css">
+    
     <style>
-
         #main {
-            margin-left: 10%;
-            margin-right: 10%;
-            margin-top: 3%;
-            padding: 5%;
-            line-height: 1px;
-            opacity: 0; 
-            transition: opacity 1s ease; 
+            width:1000px;
+            height:auto;
+            margin-top: 115px;
+            margin-bottom: 30px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            transition: opacity 1.5s ease; 
+            background-color: #40316c;
+            padding-top:100px;
+            padding-bottom:100px;
+            padding-left: 100px;
+            padding-right: 100px;
+            box-sizing: border-box;
+            border-radius: 20px;
+            overflow: hidden; 
+        }
+        #buttons {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #buttons button {
+            margin: 0 5px; 
+        }
+
+        #games-button {
+            float: left;
+        }
+
+        #webpages-button {
+            float: left;
+        }
+
+        #python-button {
+            float: left;
+        }
+        #research-button {
+            float: left;
+        }
+
+        .scroll-top {
+            cursor: pointer;
+            color: #ff7fe8;
+            transition: color 0.3s;
+        }
+
+        .scroll-top:hover {
+            color: #deff00;
+        }
+
+        #head {
+            opacity: 0;
+            transition: opacity 2s ease; /* Changed transition duration */
+        }
+
+        #head.fade-in {
+            opacity: 1;
+        }
+        p{
+            color: #ffffff9c;
+        }
+
+  
+        .github-icon {
+            font-size: 25px;
+            color: #deff00;
+        }
+
+        .python{
+            font-size: 25px;
+            color: #ff7fe8;
+            text-transform: uppercase;
         }
     </style>
     <script src="fade.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            fadeInElement("head");
             fadeInElement("main");
         });
+
+        function scrollToElement(elementId) {
+            var element = document.getElementById(elementId);
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     </script>
 </head>
 <body>
     <div id="header">
-        <a href="home.html">MD.</a>
+        <a href="home.html" class="leftnav"><i class="fas fa-bug"></i></a>
     </div>
 
-<div id="nav">
-    <a href="about.html">About</a>
-    <a href="projects.html">Projects</a>
-    <a href="contact.html">Contact</a>
-</div>
+    <div id="nav">
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+    </div>
 
-<div id="main">
-    <h1>projects</h1>
-    <p>My name is Max and I'm an aspiring software engineer.</p>
-    <p></p>
-</div>
+    <div id="head" class="fade-in">
+        <h1>projects.</h1>
+        <br>
+        <p class="pstyle">Explore my world of coding marvels, from captivating web pages to immersive games and cutting-edge machine learning projects.</p>
+        <div id="buttons">
+            <button id="games-button" onclick="scrollToElement('games')">Games</button>
+            <button id="webpages-button" onclick="scrollToElement('webpages')">Web Pages</button>
+            <button id="python-button" onclick="scrollToElement('python')">Python</button>
+            <button id="research-button" onclick="scrollToElement('research')">Research Papers</button>
+            
+        </div>
+    </div>
 
-<div id="footer"></div>
+    <div id="main">
+        <hr class="custom_hr">
+        <div id="games">
+            <h2>games <span class="scroll-top" onclick="scrollToTop()">&#8593;</span></h2>
+            <h3><a href="projects/colorGame.html" target="_blank">Color Mix</a>
+            <a href="https://github.com/makayladelacruz/Color-Mix-Game" target="_blank"><i style="font-size:24px" class="fa">&#xf09b;</i></a>
+            </h3>
+            <p>This project demonstrates a sophisticated Color Mix game implemented with HTML, CSS, and JavaScript, featuring dynamic RGB sliders that allow users to 
+                interactively adjust their chosen color, while utilizing mathematical algorithms to calculate a precise score based on the color difference between the user's selection 
+                and a randomly generated target color.</p>
+
+            <h3><a href="projects/match.html" target="_blank">Memory Matching</a>
+                <a href="https://github.com/makayladelacruz/Memory-Matching" target="_blank"><i style="font-size:24px" class="fa">&#xf09b;</i></a>
+            </h3>
+            <p>Utilizing advanced JavaScript logic and CSS grid design, this Memory Matching Game seamlessly combines card flipping mechanics with symbol generation, creating an 
+                engaging and technically robust gaming experience.</p>
+        </div>
+
+        <br>
+        <hr class="custom_hr">
+        <div id="webpages">
+            <h2>web pages <span class="scroll-top" onclick="scrollToTop()">&#8593;</span></h2>
+            
+            <h3><a href="projects/zip codes.html" target="_blank">Browse Zip Code Data</a>
+                <a href="https://github.com/makayladelacruz/zip-codes" target="_blank"><i style="font-size:24px" class="fa">&#xf09b;</i></a></h3>
+            <p>This project showcases a seamless integration of JavaScript and AJAX to dynamically fetch and display zip code data from an external source, providing users with interactive navigation functionalities.
+            </p>
+
+            <h3><a href="projects/student info form updated.html" target="_blank">Student Information Form</a>
+                <a href="https://github.com/makayladelacruz/student-info-form" target="_blank"><i style="font-size:24px" class="fa">&#xf09b;</i></a></h3>
+            <p>This project showcases an interactive student information form with Bootstrap styling, allowing users to input their name, age, year in college, location, majors, and clubs, 
+                then dynamically displaying the entered data in a structured table upon submission.</p>
+        </div>
+        <br>
+
+        <hr class="custom_hr">
+        <div id="python">
+            <h2>python <span class="scroll-top" onclick="scrollToTop()">&#8593;</span></h2>
+
+            <h3 class="python">Med Docs
+                <a href="https://github.com/makayladelacruz/MedDocs" target="_blank"><i style="font-size:24px" class="fa">&#xf09b;</i></a></h3>
+                <p>Created a GUI with Tkinter to upload, store, and organize medical documents. Followed the 8 golden rules of interface design to build a consistent layout and functional buttons.</p>
+            
+            <h3 class="python">Valentines Day
+                <a href="https://github.com/makayladelacruz/valentines-day" target="_blank"><i style="font-size:24px" class="fa">&#xf09b;</i></a></h3>
+                <p>This tkinter project features a button that triggers a recursive messagebox prompting the user with a question until they respond, 
+                    showcasing a clever implementation of event-driven interaction in a graphical user interface.
+                </p>
+
+        </div>
+        <br>
+
+        <hr class="custom_hr">
+        <div id="research">
+            <h2>research papers <span class="scroll-top" onclick="scrollToTop()">&#8593;</span></h2>
+                <h3>
+                    <a href="projects/CSC 410 Project - Final.pdf" target="_blank">Machine Learning Algorithms for Detecting Diabetes</a>
+                    <a href="https://github.com/kperez755/Data-Research-and-Algorithms-Diabetes" target="_blank"><i style="font-size:24px" class="fa">&#xf09b;</i></a>
+                </h3>
+                <p>Research paper which encompasses findings derived from diverse machine learning algorithms, including Naive Bayes, KNN, and Random Forest. 
+                    These algorithms are employed to train, test, and visualize a dataset, aiming to accurately predict whether a patient has diabetes based on their features.</p>
+            
+                <h3><a href="projects/Internet_of_Things.pdf" target="_blank">An Overview of Internet of Things</a>
+                </h3>
+                <p>This research paper examines the IoT landscape, focusing on network management, Wireless Ad Hoc Networks, message brokers, M2M Communication, 
+                    and MQTT/CoAP protocols, presenting real-world examples and assessing their pros and cons.</p>
+            
+        </div>
+    </div>
+
+    <div id="footer">
+        © 2024 by Max dela Cruz 
+    </div>
 </body>
 </html>

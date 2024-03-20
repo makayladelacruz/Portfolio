@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tic Tac Toe</title>
+    <style>
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-gap: 5px;
+            margin: 20px auto;
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            background-color: #f0f0f0;
+            font-size: 2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .cell:hover {
+            background-color: #ddd;
+        }
+
+        .winner {
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tic Tac Toe</h1>
+        <div class="board" id="board">
+            <!-- The board will be generated here -->
+        </div>
+        <button onclick="resetGame()">Reset Game</button>
+        <p id="message"></p>
+    </div>
+    
+    <script>
+        const board = document.getElementById('board');
+        const message = document.getElementById('message');
+
+        let currentPlayer = 'X';
+        let boardState = ['', '', '', '', '', '', '', '', ''];
+        let gameActive = true;
+
+        const winningCombos = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ];
+
+        // Create the board
+        for (let i = 0; i < 9; i++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            cell.setAttribute('data-cell-index', i);
+            cell.addEventListener('click', handleCellClick);
+            board.appendChild(cell);
+        }
+
+        function handleCellClick(event) {
+            const clickedCell = event.target;
+            const cellIndex = clickedCell.getAttribute('data-cell-index');
+
+            if (boardState[cellIndex] !== '' || !gameActive) {
+                return;
+            }
+
+            boardState[cellIndex] = currentPlayer;
+            clickedCell.textContent = currentPlayer;
+            clickedCell.classList.add(currentPlayer);
+
+            checkResult();
+            togglePlayer();
+        }
+
+        function togglePlayer() {
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        }
+
+        function checkResult() {
+            for (let i = 0; i < winningCombos.length; i++) {
+                const [a, b, c] = winningCombos[i];
+                if (boardState[a] && boardState[a] === boardState[b] && boardState[a] === boardState[c]) {
+                    gameActive = false;
+                    message.textContent = `${currentPlayer} wins!`;
+                    highlightWinnerCells(winningCombos[i]);
+                    return;
+                }
+            }
+
+            if (!boardState.includes('')) {
+                gameActive = false;
+                message.textContent = "It's a draw!";
+            }
+        }
+
+        function highlightWinnerCells(winningCombo) {
+            for (let i = 0; i < winningCombo.length; i++) {
+                const cellIndex = winningCombo[i];
+                const cell = board.children[cellIndex];
+                cell.classList.add('winner');
+            }
+        }
+
+        function resetGame() {
+            boardState = ['', '', '', '', '', '', '', '', ''];
+            currentPlayer = 'X';
+            gameActive = true;
+            message.textContent = '';
+            for (const cell of board.children) {
+                cell.textContent = '';
+                cell.classList.remove('X', 'O', 'winner');
+            }
+        }
+    </script>
+</body>
+</html>
